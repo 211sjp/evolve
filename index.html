@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="lib/buefy.min.css">
     <link rel="stylesheet" type="text/css" href="lib/weather-icons.min.css">
     <link rel="stylesheet" type="text/css" href="evolve/evolve.css?r=20220307">
-    <script src="lib/jquery.min.js"></script>
+    <script src="{{url_for('lib', filename='jquery.min.js')}}"></script>
     <script src="lib/vue.min.js"></script>
     <script src="lib/buefy.min.js"></script>
     <script src="lib/popper.min.js"></script>
@@ -28,10 +28,6 @@
 -->
     <script src="lib/lz-string.min.js"></script>
     
-<!--客服 开始-->
-<link rel="stylesheet" href="//g8hh.com/static/css/kf.css" type="text/css" media="screen" charset="utf-8">
-<script src="//g8hh.com/static/js/kf.js"></script>
-<!-- 客服 结束 -->
     <script src="evolve/main.js?r=20220421" type="module"></script>
 </head>
 <body>
@@ -67,24 +63,6 @@
         }
     </style>
     <div class="loading"><div class="lds-dual-ring"></div></div>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CPC46V71CB"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-CPC46V71CB');
-    </script>
-<!--站长统计-->
-   <div style="display: none"><script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?f237591d5976f87ca2e06b38c3658d9c";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
 
     </div>
 </body>

@@ -122,21 +122,21 @@ export function gameLoop(act){
             break;
         case 'start':
             {
-                let main_timer = 250;
-                let mid_timer = 1000;
-                let long_timer = 5000;
-                if (global.race['slow']){
-                    let slow = 1 + (traits.slow.vars()[0] / 100);
-                    main_timer = Math.floor(main_timer * slow);
-                    mid_timer = Math.floor(mid_timer * slow);
-                    long_timer = Math.floor(long_timer * slow);
-                }
-                if (global.race['hyper']){
+                let main_timer = 25;
+                let mid_timer = 100;
+                let long_timer = 500;
+                // if (global.race['slow']){
+                //     let slow = 1 + (traits.slow.vars()[0] / 100);
+                //     main_timer = Math.floor(main_timer * slow);
+                //     mid_timer = Math.floor(mid_timer * slow);
+                //     long_timer = Math.floor(long_timer * slow);
+                // }
+                // if (global.race['hyper']){
                     let fast = 1 - (traits.hyper.vars()[0] / 100);
                     main_timer = Math.floor(main_timer * fast);
                     mid_timer = Math.floor(mid_timer * fast);
                     long_timer = Math.floor(long_timer * fast);
-                }
+                // }
                 webWorker.mt = main_timer;
 
                 calcATime();
