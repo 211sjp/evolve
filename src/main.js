@@ -7,7 +7,7 @@ import { defineResources, resource_values, spatialReasoning, craftCost, plasmidB
 import { defineJobs, job_desc, loadFoundry, farmerValue, jobScale } from './jobs.js';
 import { f_rate, manaCost, setPowerGrid, gridEnabled, gridDefs, nf_resources } from './industry.js';
 import { defineIndustry, checkControlling, garrisonSize, armyRating, govTitle, govCivics } from './civics.js';
-import { actions, updateDesc, setChallengeScreen, addAction, BHStorageMulti, storageMultipler, checkAffordable, drawCity, drawTech, gainTech, removeAction, evoProgress, housingLabel, updateQueueNames, wardenLabel, setPlanet, resQueue, bank_vault, start_cataclysm, raceList } from './actions.js';
+import { actions, updateDesc, setChallengeScreen, addAction, BHStorageMulti, storageMultipler, checkAffordable, drawCity, drawTech, gainTech, removeAction, evoProgress, housingLabel, updateQueueNames, wardenLabel, setPlanet,simulationSetPlanet, resQueue, bank_vault, start_cataclysm, raceList } from './actions.js';
 import { renderSpace, fuel_adjust, int_fuel_adjust, zigguratBonus, setUniverse, universe_types, gatewayStorage, piracy, spaceTech } from './space.js';
 import { renderFortress, bloodwar, soulForgeSoldiers, hellSupression, genSpireFloor, mechRating, mechCollect, updateMechbay } from './portal.js';
 import { syndicate, shipFuelUse, spacePlanetStats, genXYcoord, shipCrewSize, storehouseMultiplier, tritonWar, sensorRange, erisWar, calcAIDrift } from './truepath.js';
@@ -16,7 +16,7 @@ import { events, eventList } from './events.js';
 import { govern, govActive } from './governor.js';
 import { production, highPopAdjust } from './prod.js';
 import { swissKnife } from './tech.js';
-import { vacuumCollapse } from './resets.js';
+import { big_bang, vacuumCollapse } from './resets.js';
 import { index, mainVue, initTabs, loadTab } from './index.js';
 import { getTopChange } from './wiki/change.js';
 import { enableDebug, updateDebugData } from './debug.js';
@@ -49,10 +49,28 @@ window.addEventListener('storage', (e) => {
     }
     multitab = true;
 });
-
+global.simulation = function (seed){
+    Math.seed=seed
+    console.log(seed)
+    let hell = false
+    for (let i=0; i<11; i++){
+        var res = simulationSetPlanet(hell)
+        var trait = res[1]
+        if(trait.indexOf('magnetic')!=-1 && trait.indexOf('unstable') !=-1){
+            return true
+        }
+        if(res[0] == 'hellscape'){
+            hell = true
+        }
+    }
+    return false
+}
 if (global.settings.expose){
     enableDebug();
 }
+
+global.big_bang = big_bang
+
 
 var quickMap = {
     showCiv: 1,
@@ -562,13 +580,13 @@ if (global.race.species === 'protoplasm'){
         setUniverse();
     }
     else if (global.race.seeded && !global.race['chose']){
-        Math.seed = global.race.seed;
+         //global.race.seed;
         if (global.race.probes === 0){
             setPlanet();
         }
         else {
             let hell = false;
-            for (let i=0; i<global.race.probes; i++){
+            for (let i=0; i<12; i++){
                 if (setPlanet(hell) === 'hellscape'){
                     hell = true;
                 }

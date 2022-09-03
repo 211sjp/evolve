@@ -6111,6 +6111,7 @@ export function setUniverse(){
         $('#'+id).on('click',function(){
             global.race['universe'] = universe;
             clearElement($('#evolution'));
+            console.log(Math.seed)
 
             if (global.race.probes === 0){
                 setPlanet();
@@ -6151,9 +6152,9 @@ export function ascendLab(wiki){
         if (global.race.species === 'junker'){
             unlockFeat('the_misery');
         }
-        if (global.interstellar.thermal_collector.count === 0){
-            unlockFeat(`energetic`);
-        }
+        // if (global.interstellar.thermal_collector.count === 0){
+        //     unlockFeat(`energetic`);
+        // }
         if (!global.race['modified'] && global.race['junker'] && global.race.species === 'junker'){
             unlockFeat(`garbage_pie`);
         }
@@ -6554,3 +6555,5 @@ export function ascendLab(wiki){
         }
     });
 }
+
+global.ascendLab = ascendLab;

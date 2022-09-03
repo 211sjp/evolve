@@ -6139,7 +6139,138 @@ function runAction(c_action,action,type){
     }
 }
 
+export function simulationSetPlanet(hell){
+    console.log("simulationSetPlanet")
+    var biome = 'grassland';
+    let max_bound = !hell && global.stats.portals >= 1 ? 7 : 6;
+    let subbiome = Math.floor(Math.seededRandom(0,3)) === 0 ? true : false;
+    let uAffix = universeAffix();
+    switch (Math.floor(Math.seededRandom(0,max_bound))){
+        case 0:
+            {
+                let sb = subbiome && global.stats.achieve['biome_grassland'] && global.stats.achieve.biome_grassland[uAffix] && global.stats.achieve.biome_grassland[uAffix] > 0;
+                biome = sb ? 'savanna' : 'grassland';
+            }
+            break;
+        case 1:
+            {
+                let sb = subbiome && global.stats.achieve['biome_oceanic'] && global.stats.achieve.biome_oceanic[uAffix] && global.stats.achieve.biome_oceanic[uAffix] > 0;
+                biome = sb ? 'swamp' : 'oceanic';
+            }
+            break;
+        case 2:
+            {
+                let sb = subbiome && global.stats.achieve['biome_forest'] && global.stats.achieve.biome_forest[uAffix] && global.stats.achieve.biome_forest[uAffix] > 0;
+                biome = sb ? (Math.floor(Math.seededRandom(0,2)) === 0 ? 'taiga' : 'swamp') : 'forest';
+            }
+            break;
+        case 3:
+            {
+                let sb = subbiome && global.stats.achieve['biome_desert'] && global.stats.achieve.biome_desert[uAffix] && global.stats.achieve.biome_desert[uAffix] > 0;
+                biome = sb ? 'ashland' : 'desert';
+            }
+            break;
+        case 4:
+            {
+                let sb = subbiome && global.stats.achieve['biome_volcanic'] && global.stats.achieve.biome_volcanic[uAffix] && global.stats.achieve.biome_volcanic[uAffix] > 0;
+                biome = sb ? 'ashland' : 'volcanic';
+            }
+            break;
+        case 5:
+            {
+                let sb = subbiome && global.stats.achieve['biome_tundra'] && global.stats.achieve.biome_tundra[uAffix] && global.stats.achieve.biome_tundra[uAffix] > 0;
+                biome = sb ? 'taiga' : 'tundra';
+            }
+            break;
+        case 6:
+            biome = global.race.universe === 'evil' ? 'eden' : 'hellscape';
+            break;
+        default:
+            biome = 'grassland';
+            break;
+    }
+
+    let trait = [];
+    for (let i=0; i<2; i++){
+        let top = 18 + (9 * i);
+        switch (Math.floor(Math.seededRandom(0,top))){
+            case 0:
+                if (!trait.includes('toxic')){
+                    trait.push('toxic');
+                }
+                break;
+            case 1:
+                if (!trait.includes('mellow')){
+                    trait.push('mellow');
+                }
+                break;
+            case 2:
+                if (!trait.includes('rage')){
+                    trait.push('rage');
+                }
+                break;
+            case 3:
+                if (!trait.includes('stormy')){
+                    trait.push('stormy');
+                }
+                break;
+            case 4:
+                if (!trait.includes('ozone')){
+                    trait.push('ozone');
+                }
+                break;
+            case 5:
+                if (!trait.includes('magnetic')){
+                    trait.push('magnetic');
+                }
+                break;
+            case 6:
+                if (!trait.includes('trashed')){
+                    trait.push('trashed');
+                }
+                break;
+            case 7:
+                if (!trait.includes('elliptical')){
+                    trait.push('elliptical');
+                }
+                break;
+            case 8:
+                if (!trait.includes('flare')){
+                    trait.push('flare');
+                }
+                break;
+            case 9:
+                if (!trait.includes('dense')){
+                    trait.push('dense');
+                }
+                break;
+            case 10:
+                if (!trait.includes('unstable')){
+                    trait.push('unstable');
+                }
+                break;
+            case 11:
+                if (!trait.includes('permafrost') && !['volcanic','ashland','hellscape'].includes(biome)){
+                    trait.push('permafrost');
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    let traits = '';
+    console.log(trait)
+    trait.forEach(function(t){
+        if (planetTraits.hasOwnProperty(t)){
+            traits += `${planetTraits[t].label} `;
+        }
+    });
+    console.log(traits)
+    return [biome === 'eden' ? 'hellscape' : biome,trait]
+}
+
 export function setPlanet(hell){
+    Math.seed = Math.seededRandom(0,1000000)
     var biome = 'grassland';
     let max_bound = !hell && global.stats.portals >= 1 ? 7 : 6;
     let subbiome = Math.floor(Math.seededRandom(0,3)) === 0 ? true : false;

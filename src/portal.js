@@ -2334,6 +2334,7 @@ export function bloodwar(){
                         global.portal.soul_forge.kills += demons;
                     }
                 }
+                gem_chance *=0.6;
                 if (Math.rand(0,gem_chance) === 0){
                     global.resource.Soul_Gem.amount++;
                     global.portal.fortress.pity = 0;
